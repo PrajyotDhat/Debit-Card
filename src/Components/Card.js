@@ -3,42 +3,60 @@ import '../index.css';
 import { useState } from 'react';
 
 function Card() {
-const [data,setData]=useState({
-    accNumber:"",
-    accName:"",
-    cvv:""
 
-})
+const[acNumber,setAcNumber]=useState("");
+const[acName,setacName]=useState("") ;   
 const [exMonth,setExMonth]=useState("12");
 const [exYear,setExYear]=useState("2030");
+const [cvv,setCvv]=useState("");
 
-  const handleChange=(e)=>{
-     const name=e.target.name;
-     const value=e.target.value;
-    console.log(name,value);
+ const handleAcName=(e)=>{
+    setacName(e.target.value.replace(/[^A-Z] /ig,''));
+ }
+
+ const handleAcNum=(e)=>{
+    let acNumber = e.target.value;
+      setAcNumber(acNumber);
+    }
+
+ const handleCvv=(e)=>{
+      setCvv(e.target.value); 
+    }
+
+ const mouseEnter=()=>{
+    document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(-180deg)';
+    document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(0deg)';
+ }
+
+ const mouseLeave=()=>{
+    document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(0deg)';
+    document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(180deg)';
+ } 
+  
+   const handleSubmit=(e)=>{
+   console.log(acNumber);
+   console.log(acName);
+   console.log(exMonth);
+   console.log(exYear);
+   console.log(cvv);
+   e.preventDefault();
+   }
    
-    setData((prev)=>{
-        return{
-            ...prev,[name]:value
-        }
-    });
-    e.preventDefault();
-  }
   return (  
     <div className="container">
 
     <div className="card-container">
 
-        <div className="front">
+        <div className="front" >
             <div className="image">
                 <img src="/Images/chip.png" alt=""/>
                 <img src="Images/visa.png" alt=""/>
             </div>
-            <div className="card-number-box">{data.accNumber}</div>
+            <div className="card-number-box" >{acNumber}</div>
             <div className="flexbox">
                 <div className="box">
                     <span>card holder</span>
-                    <div className="card-holder-name" >{data.accName}</div>
+                    <div className="card-holder-name" >{acName}</div>
                 </div>
                 <div className="box">
                     <span>expires</span>
@@ -54,21 +72,21 @@ const [exYear,setExYear]=useState("2030");
             <div className="stripe"></div>
             <div className="box">
                 <span>cvv</span>
-                <div className="cvv-box">{data.cvv}</div>
+                <div className="cvv-box">{cvv}</div>
                 <img src="/images/visa.png" alt=""/>
             </div>
         </div>
 
     </div>
-    <form action="">
+    <form action="" onSubmit={handleSubmit}>
         <div className="inputBox">
             <span>card number</span>
-            <input type="text" maxlength="16" className="card-number-input"
-             id="inputCardNum" onChange={handleChange} name='accNumber' />
+            <input type="text"  maxlength="16"  className="card-number-input"
+             id="inputCardNum" onChange={handleAcNum}  />
         </div>
         <div className="inputBox">
             <span>card holder</span>
-            <input type="text" className="card-holder-input" onChange={handleChange} name='accName'/>
+            <input type="text" className="card-holder-input" onChange={handleAcName}/>
         </div>
         <div className="flexbox">
             <div className="inputBox">
@@ -106,7 +124,7 @@ const [exYear,setExYear]=useState("2030");
             </div>
             <div className="inputBox">
                 <span>cvv</span>
-                <input type="text" maxlength="3" className="cvv-input" onChange={handleChange} name="cvv"/>
+                <input type="text" onMouseEnter={mouseEnter} onMouseLeave={mouseLeave} maxlength="3" className="cvv-input" onChange={handleCvv} name="cvv"/>
             </div>
         </div>
         <input type="submit" value="submit" className ="submit-btn"/>
