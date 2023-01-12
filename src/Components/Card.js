@@ -2,7 +2,7 @@ import React from 'react'
 import '../index.css';
 import { useState } from 'react';
 
-function Cards() {
+function Card() {
 
 const[acNumber,setAcNumber]=useState("");
 const[acName,setacName]=useState("") ;   
@@ -135,4 +135,4 @@ const [cvv,setCvv]=useState("");
   )
 }
 
-export default Cards;
+export default Card;
